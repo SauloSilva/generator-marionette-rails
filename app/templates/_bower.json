@@ -1,6 +1,12 @@
 {
-  "name": "package",
-  "version": "0.0.0",
-  "dependencies": {}
+  "name": "<%= appName %>",
+  "version": "0.0.1",
+  "ignore": [
+    "**/.*",
+    "vendor/assets/bower_components"
+  ],
+  "dependencies": {
+    "jquery" : "2.1.1",
+    "backbone.marionette": "2.3.2"
+  }
 }
-
