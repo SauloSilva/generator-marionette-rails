@@ -2,8 +2,7 @@
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
-
-var jsRootDestination = "app/assets/javascripts/"
+var jsRootDestination = "app/assets/javascripts/";
 
 module.exports = yeoman.generators.Base.extend({
   initializing: function () {
@@ -91,14 +90,6 @@ module.exports = yeoman.generators.Base.extend({
 
     projectfiles: function () {
       this.fs.copy(
-        this.templatePath('editorconfig'),
-        this.destinationPath('.editorconfig')
-      );
-      this.fs.copy(
-        this.templatePath('jshintrc'),
-        this.destinationPath('.jshintrc')
-      );
-      this.fs.copy(
         this.templatePath('.bowerrc'),
         this.destinationPath('.bowerrc')
       );
@@ -106,8 +97,6 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   install: function () {
-    this.installDependencies({
-      skipInstall: this.options['skip-install']
-    });
+    this.bowerInstall();
   }
 });
