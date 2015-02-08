@@ -10,7 +10,9 @@ describe('marionette-rails:app', function () {
   before(function (done) {
     helpers.run(path.join(__dirname, '../app'))
       .inDir(path.join(os.tmpdir(), './temp-test'))
+      .withOptions({ skipInstall: true })
       .withPrompt({
+        appName: 'Test',
         hasLiveReload: true
       })
       .on('end', done);

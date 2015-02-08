@@ -97,6 +97,7 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   install: function () {
+    if (this.options.skipInstall) { return }
     this.bowerInstall();
   }
 });
