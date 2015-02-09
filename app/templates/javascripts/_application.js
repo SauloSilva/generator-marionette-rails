@@ -19,5 +19,6 @@
 
 //= require_self
 
-$(document).ready ->
+$(document).ready(function(){
   <%= appName %>.start()
+})

@@ -4,9 +4,10 @@ var path = require('path');
 var assert = require('yeoman-generator').assert;
 var helpers = require('yeoman-generator').test;
 var os = require('os');
+var fs = require('fs-extra');
 var jsRootDestination = 'app/assets/javascripts/';
 
-describe('marionette-rails:app', function () {
+describe('marionette-rails:app:coffee', function () {
   before(function (done) {
     helpers.run(path.join(__dirname, '../app'))
       .inDir(path.join(os.tmpdir(), './temp-test'))
@@ -16,13 +17,14 @@ describe('marionette-rails:app', function () {
         hasLiveReload: true
       })
       .on('end', done);
+
   });
 
   it('creates files', function () {
     assert.file([
       '.bowerrc',
       'bower.json',
-      jsRootDestination + 'application.js.coffee',
+      jsRootDestination + 'application.js',
       jsRootDestination + 'backbone/app.js.coffee',
       jsRootDestination + 'backbone/lib/controllers/application_controller.js.coffee',
       jsRootDestination + 'backbone/lib/utilities/fetch.js.coffee',
@@ -39,10 +41,14 @@ describe('marionette-rails:app', function () {
   });
 
   it('check content file', function() {
-    var gems = "gem 'guard-livereload', '2.4.0', require: false, group: :development\ngem 'rack-livereload', '0.3.15', group: :development"
+    var liveReload = "gem 'guard-livereload', '2.4.0', require: false, group: :development";
+    var rackLiveReload = "gem 'rack-livereload', '0.3.15', group: :development";
+    var hamlCoffeeAssets = "gem 'haml_coffee_assets', git: 'https://github.com/netzpirat/haml_coffee_assets'";
     var guard = "guard 'livereload' do \n\twatch(%r{app/views/.+\.haml}) \n\twatch(%r{vendor/assets/bower_components/.+\.(css|js|html)}) \n\twatch(%r{(app|vendor)(/assets/\w+/(.+\.(coffee|sass|css|js|html|hamlc))).*}) { |m| '/assets/#{m[3]}' } \nend"
 
-    assert.fileContent('Gemfile', gems)
+    assert.fileContent('Gemfile', liveReload)
+    assert.fileContent('Gemfile', rackLiveReload)
+    assert.fileContent('Gemfile', hamlCoffeeAssets)
     assert.fileContent('Guardfile', guard)
   });
 });

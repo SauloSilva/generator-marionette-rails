@@ -3,4 +3,4 @@ class window.Assets
     @_instance ?= new @(arguments...)
 
   imagePath: (image) ->
-    Settings.assets[image]
+    return
