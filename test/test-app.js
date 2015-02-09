@@ -4,7 +4,6 @@ var path = require('path');
 var assert = require('yeoman-generator').assert;
 var helpers = require('yeoman-generator').test;
 var os = require('os');
-var fs = require('fs-extra');
 var jsRootDestination = 'app/assets/javascripts/';
 
 describe('marionette-rails:app:js', function () {
