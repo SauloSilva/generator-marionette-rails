@@ -2,7 +2,6 @@
 
 > [Yeoman](http://yeoman.io) generator
 
-
 ## Getting Started
 
 ### What is Yeoman?
@@ -19,9 +18,17 @@ Not every new computer comes with a Yeoman pre-installed. He lives in the [npm](
 npm install -g yo
 ```
 
-### Yeoman Generators
+### What is Rails?
 
-Yeoman travels light. He didn't pack any generators when he moved in. You can think of a generator like a plug-in. You get to choose what type of application you wish to create, such as a Backbone application or even a Chrome extension.
+[Rails](http://guides.rubyonrails.org/getting_started.html) is a web application development framework written in the Ruby language. It is designed to make programming web applications easier.
+
+```bash
+gem install rails
+```
+
+### Yeoman Generator Marionette Rails
+
+This generator is intended to help structure a project on rails that provide to receive the marionette as the framework of javascript.
 
 To install generator-marionette-rails from npm, run:
 
@@ -35,12 +42,62 @@ Finally, initiate the generator:
 yo marionette-rails
 ```
 
-### Getting To Know Yeoman
+### Directory structure
 
-Yeoman has a heart of gold. He's a person with feelings and opinions, but he's very easy to work with. If you think he's too opinionated, he can be easily convinced.
+- app/
+    - assets/
+      - javascripts/                --> client side files
+        - backbone/
+          - apps/
+          - entities/
+          - lib/
+            - components/
+            - concerns/
+            - controllers/
+              - * application_controller.js(.coffee)
+            - utilities/
+              - * fetch.js(.coffee)
+              - * mixings.js(.coffee)
+              - * navigation.js(.coffee)
+              - * registry.js(.coffee)
+              - * renderer.js(.coffee)
+            - views/
+          - * app.js(.coffee)
+        - config/
+          - backbone/
+            - * sync.js(.coffee)
+          - * assets.js(.coffee)
+          - * hamlc.js(.coffee)
+          - * settings.js.erb
 
-If you'd like to get to know Yeoman better and meet some of his friends, [Grunt](http://gruntjs.com) and [Bower](http://bower.io), check out the complete [Getting Started Guide](https://github.com/yeoman/yeoman/wiki/Getting-Started).
+        - * application.js(.coffee)
+    
+    - config/
+      - initializers/
+        - * live_reload_middleware.rb
 
+    * bower.json
+    * .bowerrc
+    * vendor/assets/bower_components    --> bower installs
+
+
+### Options
+
+- **hasCoffee: (true|false)**
+
+  You can pick coffescript or javascript. By default's coffeescript.
+
+- **templateEngine: (haml|underscore)**
+  
+  You may use haml and underscore. By default is haml
+
+- **hasLiveReload: (true|false)**
+  
+  You can request for we configured the livereload for your assets
+
+- **classLoading: (string)**
+
+  Sets the CSS class to the div to load. By default's `is-loading`
 
 ## License
 
