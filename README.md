@@ -2,6 +2,8 @@
 
 > [Yeoman](http://yeoman.io) generator
 
+[![Build Status](https://travis-ci.org/SauloSilva/generator-marionette-rails.svg?branch=master)](https://travis-ci.org/SauloSilva/generator-marionette-rails)
+
 ## Getting Started
 
 ### What is Yeoman?
