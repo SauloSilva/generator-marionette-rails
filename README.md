@@ -2,8 +2,6 @@
 
 > [Yeoman](http://yeoman.io) generator
 
-[![Build Status](https://travis-ci.org/SauloSilva/generator-marionette-rails.svg?branch=master)](https://travis-ci.org/SauloSilva/generator-marionette-rails)
-
 ## Getting Started
 
 ### What is Yeoman?
@@ -23,6 +21,8 @@ npm install -g yo
 ### What is Rails?
 
 [Rails](http://guides.rubyonrails.org/getting_started.html) is a web application development framework written in the Ruby language. It is designed to make programming web applications easier.
+
+![rails](http://rubyonrails.org/images/rails.png)
 
 ```bash
 gem install rails
