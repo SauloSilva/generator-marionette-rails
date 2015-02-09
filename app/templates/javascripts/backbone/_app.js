@@ -3,15 +3,15 @@ this.<%= appName %> = (function(Backbone, Marionette) {
   App.addRegions({});
 
   App.addInitializer(function() {
-    return console.log('app initialized');
+    console.log('app initialized');
   });
 
   App.reqres.setHandler('concern', function(concern) {
-    return App.Concerns[concern];
+    App.Concerns[concern];
   });
 
   App.on('start', function() {
-    return this.startHistory();
+    this.startHistory();
   });
 
   return App;

@@ -2,8 +2,9 @@
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
-var jsRootDestination = "app/assets/javascripts/";
-var gems = "";
+var jsRootDestination = 'app/assets/javascripts/';
+var gems = '';
+var fileExtension = '';
 
 module.exports = yeoman.generators.Base.extend({
   initializing: function () {
@@ -19,18 +20,30 @@ module.exports = yeoman.generators.Base.extend({
 
     var prompts = [{
       name: 'appName',
-      message: "What is your app\'s name ?"
+      message: 'What is your app\'s name ?'
     },{
       type: 'confirm',
       name: 'hasCoffee',
       message: 'You will use coffescript ?'
+    },{
+      type: 'list',
+      name: 'templateEngine',
+      message: 'Which template engine do you want to use?',
+      choices:[{
+        name: 'Haml',
+        value: 'haml'
+      },{
+        name: 'Underscore',
+        value: 'underscore'
+      }],
+      default: 'haml'
     },{
       type: 'confirm',
       name: 'hasLiveReload',
       message: 'You want to add livereload ?'
     }, {
       name: 'classLoading',
-      message: "What your name\'s loading class ?",
+      message: 'What your name\'s loading class ?',
       default: '.is-loading'
     }];
 
@@ -59,22 +72,21 @@ module.exports = yeoman.generators.Base.extend({
         appName: this.props.appName,
         classLoading: this.props.classLoading
     };
-    var fileExtension = this.props.hasCoffee ? '.coffee' : ''
+    fileExtension = this.props.hasCoffee ? '.coffee' : '';
 
-    this.template("javascripts/_application.js", jsRootDestination + "application.js", context);
+    this.template('javascripts/_application.js', jsRootDestination + 'application.js', context);
 
-    this.template("javascripts/backbone/_app.js" + fileExtension, jsRootDestination + "backbone/app.js" + fileExtension, context);
-    this.template("javascripts/backbone/lib/controllers/_application_controller.js" + fileExtension, jsRootDestination + "backbone/lib/controllers/application_controller.js" + fileExtension, context);
-    this.template("javascripts/backbone/lib/utilities/_fetch.js" + fileExtension, jsRootDestination + "backbone/lib/utilities/fetch.js" + fileExtension, context);
-    this.template("javascripts/backbone/lib/utilities/_mixings.js" + fileExtension, jsRootDestination + "backbone/lib/utilities/mixings.js" + fileExtension, context);
-    this.template("javascripts/backbone/lib/utilities/_navigation.js" + fileExtension, jsRootDestination + "backbone/lib/utilities/navigation.js" + fileExtension, context);
-    this.template("javascripts/backbone/lib/utilities/_registry.js" + fileExtension, jsRootDestination + "backbone/lib/utilities/registry.js" + fileExtension, context);
-    this.template("javascripts/backbone/lib/utilities/_renderer.js" + fileExtension, jsRootDestination + "backbone/lib/utilities/renderer.js" + fileExtension, context);
+    this.template('javascripts/backbone/_app.js' + fileExtension, jsRootDestination + 'backbone/app.js' + fileExtension, context);
+    this.template('javascripts/backbone/lib/controllers/_application_controller.js' + fileExtension, jsRootDestination + 'backbone/lib/controllers/application_controller.js' + fileExtension, context);
+    this.template('javascripts/backbone/lib/utilities/_fetch.js' + fileExtension, jsRootDestination + 'backbone/lib/utilities/fetch.js' + fileExtension, context);
+    this.template('javascripts/backbone/lib/utilities/_mixings.js' + fileExtension, jsRootDestination + 'backbone/lib/utilities/mixings.js' + fileExtension, context);
+    this.template('javascripts/backbone/lib/utilities/_navigation.js' + fileExtension, jsRootDestination + 'backbone/lib/utilities/navigation.js' + fileExtension, context);
+    this.template('javascripts/backbone/lib/utilities/_registry.js' + fileExtension, jsRootDestination + 'backbone/lib/utilities/registry.js' + fileExtension, context);
+    this.template('javascripts/backbone/lib/utilities/_renderer.js' + fileExtension, jsRootDestination + 'backbone/lib/utilities/renderer.js' + fileExtension, context);
 
-    this.copy("javascripts/config/backbone/_sync.js" + fileExtension, jsRootDestination + "config/backbone/sync" + fileExtension);
-    this.copy("javascripts/config/_assets.js" + fileExtension, jsRootDestination + "config/assets" + fileExtension);
-    this.copy("javascripts/config/_hamlc.js" + fileExtension, jsRootDestination + "config/hamlc" + fileExtension);
-    this.copy("javascripts/config/_settings.js.erb", jsRootDestination + "config/settings.js.erb");
+    this.copy('javascripts/config/backbone/_sync.js' + fileExtension, jsRootDestination + 'config/backbone/sync.js' + fileExtension);
+    this.copy('javascripts/config/_assets.js' + fileExtension, jsRootDestination + 'config/assets.js' + fileExtension);
+    this.copy('javascripts/config/_settings.js.erb', jsRootDestination + 'config/settings.js.erb');
   },
 
   addLiveReload: function() {
@@ -82,26 +94,30 @@ module.exports = yeoman.generators.Base.extend({
     gems += "\ngem 'guard-livereload', '2.4.0', require: false, group: :development"
     gems += "\ngem 'rack-livereload', '0.3.15', group: :development"
     var guard = "guard 'livereload' do \n\twatch(%r{app/views/.+\.haml}) \n\twatch(%r{vendor/assets/bower_components/.+\.(css|js|html)}) \n\twatch(%r{(app|vendor)(/assets/\w+/(.+\.(coffee|sass|css|js|html|hamlc))).*}) { |m| '/assets/#{m[3]}' } \nend"
+    this.write('Guardfile', guard);
+    this.template('rails/initializers/_live_reload_middleware.rb', 'config/initializers/live_reload_middleware.rb', { appName: this.props.appName });
+  },
 
-    this.write("Guardfile", guard);
-    this.template("rails/initializers/_live_reload_middleware.rb", "config/initializers/live_reload_middleware.rb", { appName: this.props.appName });
+  addHamlCoffeeAssets: function() {
+    if (this.props.templateEngine !== 'haml') { return }
+    gems += "\ngem 'haml_coffee_assets', git: 'https://github.com/netzpirat/haml_coffee_assets'";
+    this.copy('javascripts/config/_hamlc.js' + fileExtension, jsRootDestination + 'config/hamlc.js' + fileExtension);
   },
 
   addGems: function() {
-    gems += "\ngem 'haml_coffee_assets', git: 'https://github.com/netzpirat/haml_coffee_assets'";
     try {
-      var Gemfile = this.readFileAsString("Gemfile")
+      var Gemfile = this.readFileAsString('Gemfile')
     } catch(e) {
-      var Gemfile = ""
+      var Gemfile = ''
     }
     Gemfile += gems;
 
-    this.write("Gemfile", Gemfile);
+    this.write('Gemfile', Gemfile);
   },
 
   writing: {
     app: function () {
-      this.template("_bower.json", "bower.json", { appName: this.props.appName });
+      this.template('_bower.json', 'bower.json', { appName: this.props.appName });
     },
 
     projectfiles: function () {

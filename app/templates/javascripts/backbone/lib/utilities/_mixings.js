@@ -4,18 +4,19 @@ this.<%= appName %>.module('Utilities', function(Utilities, App, Backbone, Mario
   var results = [];
 
   var include = function() {
-    var klass = @
+    var klass = this;
     var objs =  arguments.length ? [].slice.call(arguments, 0) : [];
 
     $.each(objs, function(i, obj) {
       var concern = App.request('concern', obj)
+      var ref = '';
 
       var beforeIncluded = concern.beforeIncluded
       if (beforeIncluded) {
         beforeIncluded.call(klass.prototype, klass, concern)
       }
 
-      Cocktail.mixin(klass, (var ref = _(concern).omit(ref, mixinKeywords)))
+      Cocktail.mixin(klass, (ref = _(concern).omit(ref, mixinKeywords)))
 
       var afterIncluded = concern.afterIncluded
       if (afterIncluded) {
@@ -34,11 +35,12 @@ this.<%= appName %>.module('Utilities', function(Utilities, App, Backbone, Mario
     }
   ];
 
-
   $.each(modules, function(i, module){
     for (key in module) {
-      obj = window[key] || App[key];
-      results.push(obj[klass].include = include;)
+      $.each(module[key], function(i, klass) {
+        obj = window[key] || App[key];
+        results.push(obj[klass].include = include);
+      })
     }
   })
 
