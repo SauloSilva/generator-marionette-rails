@@ -1,15 +1,14 @@
 {
   "name": "generator-marionette-rails",
-  "version": "0.0.0",
-  "description": "Yeoman generator",
+  "version": "0.0.1",
+  "description": "Scaffold generator of environment Marionette to Rails",
   "license": "MIT",
   "main": "app/index.js",
-  "repository": "SauloSilva/generator-marionette-rails",
-  "author": {
-    "name": "Saulo Santiago",
-    "email": "saulodasilvasantiago@gmail.com",
-    "url": "https://github.com/SauloSilva"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SauloSilva/generator-marionette-rails"
   },
+  "author": "Saulo Santiago <saulodasilvasantiago@gmail.com> (https://github.com/SauloSilva)",
   "engines": {
     "node": ">=0.10.0"
   },
@@ -20,7 +19,11 @@
     "app"
   ],
   "keywords": [
-    "yeoman-generator"
+    "yeoman",
+    "generator",
+    "yeoman-generator",
+    "marionette",
+    "rails"
   ],
   "dependencies": {
     "yeoman-generator": "^0.18.0",
@@ -32,5 +35,12 @@
   },
   "peerDependencies": {
     "yo": ">=1.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/SauloSilva/generator-marionette-rails/issues"
+  },
+  "homepage": "https://github.com/SauloSilva/generator-marionette-rails",
+  "directories": {
+    "test": "test"
   }
 }
