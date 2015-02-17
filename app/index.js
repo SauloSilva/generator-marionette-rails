@@ -22,6 +22,10 @@ module.exports = yeoman.generators.Base.extend({
       name: 'appName',
       message: 'What is your app\'s name ?'
     },{
+      name: 'jsRootDestination',
+      message: 'What is your root js folder ?',
+      default: jsRootDestination
+    },{
       type: 'confirm',
       name: 'hasCoffee',
       message: 'You will use coffescript ?'
@@ -51,6 +55,10 @@ module.exports = yeoman.generators.Base.extend({
       this.props = props;
       done();
     }.bind(this));
+  },
+
+  parseJsRootDestination: function() {
+    jsRootDestination = this.props.jsRootDestination.replace(/\/?$/, '/');
   },
 
   scaffoldFolders: function(){

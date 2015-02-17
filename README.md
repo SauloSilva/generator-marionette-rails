@@ -48,7 +48,7 @@ yo marionette-rails
 
 - app/
     - assets/
-      - javascripts/                --> client side files
+      - javascripts/                --> client side files(root dir)
         - backbone/
           - apps/
           - entities/
@@ -84,6 +84,9 @@ yo marionette-rails
 
 
 ### Options
+
+- **jsRootDestination: (app/assets/javascripts)**
+  Root directory is optional, you can change.
 
 - **hasCoffee: (true|false)**
 
